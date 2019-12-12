@@ -1,4 +1,5 @@
 # InteractiveTrafficLight.py
+from bottle import route, run, template
 import RPi.GPIO as GPIO
 
 carLED = { 'RED' : 14, 'YELLOW' : 15, 'GREEN' : 18 }
@@ -16,3 +17,36 @@ for i in pedLED:
 
 # Set Button pin to IN
 GPIO.setup(button, GPIO.IN)
+
+def PedGreen():
+	pass
+
+# Webpage 
+webRed = """
+<script>
+function GreenLight() {
+	window.location.href = '/PedGreen'
+} 
+</script>
+
+Interactive Button: 
+<input type = 'button' onClick = 'GreenLight()' value = 'ON' />
+"""
+
+webGreen = """
+<script>
+window.location.href = '/PedRed'
+</script>
+"""
+
+@route('/')
+@route('/PedRed')
+def index():
+	return webRed
+
+@route('/PedGreen')
+def index():
+	PedGreen()
+	return webGreen
+
+run(host = 'localhost', port = 8080)
