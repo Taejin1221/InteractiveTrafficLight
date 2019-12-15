@@ -17,7 +17,8 @@ for i in pedLED:
 	GPIO.setup(pedLED[i], GPIO.OUT)
 
 # Set Button pin to IN
-GPIO.setup(button, GPIO.IN)
+GPIO.setup(button, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+
 
 def PedGreen():
 	GPIO.output(carLED['GREEN'], False)
@@ -31,6 +32,10 @@ def PedGreen():
 	sleep(4)
 	GPIO.output(pedLED['GREEN'], False)
 	GPIO.output(pedLED['RED'], True)
+
+
+GPIO.add_event_detect(button, GPIO.RISING, callback = PedGreen)
+
 
 # Webpage 
 webRed = """
